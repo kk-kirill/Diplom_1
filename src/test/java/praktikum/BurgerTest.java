@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -67,10 +68,5 @@ public class BurgerTest {
         burger.addIngredient(ingredient);
 
         assertEquals(300f, burger.getPrice(), 0.01);
-    }
-
-    @Test
-    public void testGetReceipt() {
-
     }
 }
