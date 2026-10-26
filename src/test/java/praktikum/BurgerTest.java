@@ -1,5 +1,6 @@
 package praktikum;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,8 +36,11 @@ public class BurgerTest {
     @Test
     public void testAddIngredient() {
         burger.addIngredient(ingredient);
-        assertEquals(1, burger.ingredients.size());
-        assertEquals(ingredient, burger.ingredients.get(0));
+
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(burger.ingredients.size()).isEqualTo(1);
+        softly.assertThat(burger.ingredients.get(0)).isEqualTo(ingredient);
+        softly.assertAll();
     }
 
     @Test
@@ -49,14 +52,16 @@ public class BurgerTest {
 
     @Test
     public void testMoveIngredient() {
-        Ingredient ingredient2 = mock(Ingredient.class);
+        Ingredient secondIngredient = mock(Ingredient.class);
         burger.addIngredient(ingredient);
-        burger.addIngredient(ingredient2);
+        burger.addIngredient(secondIngredient);
         burger.moveIngredient(0, 1);
 
-        assertEquals(2, burger.ingredients.size());
-        assertEquals(ingredient2, burger.ingredients.get(0));
-        assertEquals(ingredient, burger.ingredients.get(1));
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(burger.ingredients.size()).isEqualTo(2);
+        softly.assertThat(burger.ingredients.get(0)).isEqualTo(secondIngredient);
+        softly.assertThat(burger.ingredients.get(1)).isEqualTo(ingredient);
+        softly.assertAll();
     }
 
     @Test

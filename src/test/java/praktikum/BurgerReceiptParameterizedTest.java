@@ -1,5 +1,6 @@
 package praktikum;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +8,6 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
@@ -31,7 +31,7 @@ public class BurgerReceiptParameterizedTest {
         this.ingredientName = ingredientName;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1} {2}")
     public static Object[][] data() {
         return new Object[][] {
                 {IngredientType.SAUCE, "sauce", "hot sauce"},
@@ -58,9 +58,11 @@ public class BurgerReceiptParameterizedTest {
 
         String receipt = burger.getReceipt();
 
-        assertTrue(receipt.contains("black bun"));
-        assertTrue(receipt.contains(typeName));
-        assertTrue(receipt.contains(ingredientName));
-        assertTrue(receipt.contains("300"));
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(receipt).contains("black bun");
+        softly.assertThat(receipt).contains(typeName);
+        softly.assertThat(receipt).contains(ingredientName);
+        softly.assertThat(receipt).contains("300");
+        softly.assertAll();
     }
 }
